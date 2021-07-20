@@ -75,12 +75,12 @@ function cardinalAround(centralRow, centralCol) {
 function dropChip(lowestRow, colClicked, chipColor) { // so call with game board size, event clickcol, and whos turn it is or chipcolor?
 	// can we recurse here too? call a method on bottom in col, and that method if 
 	let cellEmpty = 1; //assumes empty
-	while (cellEmpty) { // put safety in (&&(j<20))
+	while ((cellEmpty)&&(j<20)) { // put safety in (&&(j<20))
 		let cellFilled = 0;
 		cellFilled = cell[lowestRow][colClicked].dropHere(chipColor);
 		cellEmpty = cellEmpty + cellFilled; //wasCellFilled()
 		lowestRow = lowestRow - 1; //moveUp()
-		// j++; safety
+		j++; // safety
 	}
 }
 
@@ -92,7 +92,9 @@ function controller() {
     let rackCols = 7,
         rackRows = 6;
 
-    initRack(rackRows, rackCols);
+    initCells(rackRows, rackCols);
+	
+	initRack('red', )
 
     const wholeRack = document.getElementById('rack');
 
@@ -103,7 +105,7 @@ function controller() {
 
 let cell = [];
 
-function initBoard(noOfRows, noOfColumns) {
+function initCells(noOfRows, noOfColumns) {
     for (let i = 0; i < noOfRows; i++ ) {
         cell[i] = [];
         for (let j = 0; j < noOfColumns; j++) {
@@ -114,9 +116,10 @@ function initBoard(noOfRows, noOfColumns) {
 
 function moveRegistered(mouseEvent) {
     let whereClicked = mouseEvent.target.getAttribute('id'),
-        clickedCol = whereClicked[1],
-        clickedRow = whereClicked[0];
+        clickedCol = whereClicked[1];
 
-    let mine = cell[clickedRow][clickedCol].dropChip(); // throwback it's mine tho (the cell)
-    mouseEvent.target.innerText = mine;
+	dropChip(rackRows, clickedCol, rackState.turn);
+
+    // let mine = cell[clickedRow][clickedCol].dropChip(); // throwback it's mine tho (the cell)
+    // mouseEvent.target.innerText = mine;
 } 
