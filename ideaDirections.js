@@ -30,7 +30,7 @@ class Cell {
 		} else {
 			rackState[rackState.length - 1].captureCell(this.row, this.col, chipColor) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
 			this.renderCell(chipColor)// render this change too...
-			this.isThereAWinner(chipColor);
+			this.isThereAWinner(chipColor); // should be done by controller.
 			return 1;
 		}
 	}
@@ -39,6 +39,7 @@ class Cell {
 		cell[this.row][this.col].setAttribute('style', `background-color: ${color}`);
 	}
 
+	//	This should be done by controller.
 	isThereAWinner(color) {
 		if (n === 0) {
 			return 
@@ -52,12 +53,25 @@ class Cell {
 }
 
 function cardinalAround(centralRow, centralCol) {
-	const principalAxis = { //  these are summing on top basically
+	const principalDirctions = { //  these are summing on top basically
 		  right: [0, 1], // so for left and down, etc... we can multiply these principals by -1
 		  up: [-1, 0],
 		  diagUpRight: [-1, 1],
 		  diagDownRight: [1, 1]
 	},
-		  mirroredAxis = principalAxis.map();// how to do *-1 on it?
+		  mirroredAxis = principalDirections.map();// how to do *-1 on it?
 	
 }
+
+// So below is some idea of how to take ordinal? vector and scale them 
+
+let myDirArr = Object.values(principalDirections);
+let scaledVectors = myDirArr.map((direction) => {
+    let s = 0;
+    let ourArrCells = [];
+    while (s < 4) {
+        ourArrCells.push(direction.map( pos => pos * s));
+        s++;
+    };
+    return `${Object.keys(direction)}: ${ourArrCells};`
+});
