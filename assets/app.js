@@ -30,8 +30,6 @@ class RackState {
 		
     }
 }
-//	Opening state
-let turn1 = new RackState(1, Array(6).fill(Array(7).fill(0)));
 
 class Cell {
 	constructor(row, col) {
@@ -57,37 +55,41 @@ class Cell {
 	renderCell(color) {
 		cell[this.row][this.col].setAttribute('style', `background-color: ${color}`);
 	}
-
+	
 	//	This should be done by controller.
 	// isThereAWinner(color) {
 		// if (n === 0) {
 			// return
 			// }
-		// direction(?row, ?col, this.row, this.col) {
-			// direction(?row, ?col) {
-				// 
-			// }
-			// }
-	// }
-}
+			// direction(?row, ?col, this.row, this.col) {
+				// direction(?row, ?col) {
+					// 
+					// }
+					// }
+					// }
+				}
+				
+//	Init
+//	Opening state and init cells
+let turn1 = new RackState(1, Array(6).fill(Array(7).fill(0))),
+	cell = [];
 
-let whereClicked = '',
-    clickedCol = '',
-	rackCols = 7,
-    rackRows = 5; // what is going on?
+wholeRack.addEventListener('click', controller);
 
 function controller() {
-
+	let whereClicked = '',
+	clickedCol = '',
+	rackCols = 7,
+	rackRows = 5; // what is going on?
+	
     initCells(rackRows, rackCols);
-
+	
     const wholeRack = document.getElementById('rack');
 
-    wholeRack.addEventListener('click', moveRegistered);
  
     dropChip(rackRows, clickedCol, RackState.whatTurnIsIt())
 }
 
-let cell = [];
 
 function initCells(noOfRows, noOfColumns) {
     for (let i = 0; i < noOfRows; i++ ) {
