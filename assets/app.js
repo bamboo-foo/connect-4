@@ -111,7 +111,7 @@ function dropChip(lowestRow, colClicked, chipColor) { // so call with game board
 	} else {
 		chipColor = 'blue';
 	}
-    console.log(cell[lowestRow][colClicked].dropHere(chipColor));
+    console.log(lowestRow, colClicked) //.dropHere(chipColor));
 	// can we recurse here too? call a method on bottom in col, and that method if 
 	// let cellEmpty = 1; //assumes empty
     // let j = 0;
