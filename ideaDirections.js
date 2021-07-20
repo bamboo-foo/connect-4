@@ -1,11 +1,11 @@
-function dropChip(botRow, colClicked, chipColor) { // so call with game board size, event clickcol, and whos turn it is or chipcolor?
+function dropChip(lowestRow, colClicked, chipColor) { // so call with game board size, event clickcol, and whos turn it is or chipcolor?
 	// can we recurse here too? call a method on bottom in col, and that method if 
 	let cellEmpty = 1; //assumes empty
 	while (cellEmpty) { // put safety in (&&(j<20))
 		let cellFilled = 0;
-		cellFilled = cell[botRow][colClicked].dropHere(chipColor);
+		cellFilled = cell[lowestRow][colClicked].dropHere(chipColor);
 		cellEmpty = cellEmpty + cellFilled; //wasCellFilled()
-		botRow = botRow - 1; //moveUp()
+		lowestRow = lowestRow - 1; //moveUp()
 		// j++; safety
 	}
 }
@@ -40,16 +40,16 @@ class Cell {
 	}
 
 	//	This should be done by controller.
-	isThereAWinner(color) {
-		if (n === 0) {
-			return 
-		}
-		direction(?row, ?col, this.row, this.col) {
-			direction(?row, ?col) {
-				
-			}
-		}
-	}
+	// isThereAWinner(color) {
+		// if (n === 0) {
+			// return
+		// }
+		// direction(?row, ?col, this.row, this.col) {
+			// direction(?row, ?col) {
+				// 
+			// }
+		// }
+	// }
 }
 
 function cardinalAround(centralRow, centralCol) {
@@ -59,7 +59,7 @@ function cardinalAround(centralRow, centralCol) {
 		  diagUpRight: [-1, 1],
 		  diagDownRight: [1, 1]
 	},
-		  mirroredAxis = principalDirections.map();// how to do *-1 on it?
+		  mirroredDirections = principalDirections.map();// how to do *-1 on it?
 	
 }
 
@@ -73,5 +73,5 @@ let scaledVectors = myDirArr.map((direction) => {
         ourArrCells.push(direction.map( pos => pos * s));
         s++;
     };
-    return `${Object.keys(direction)}: ${ourArrCells};`
+    return ourArrCells;
 });
