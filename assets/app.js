@@ -30,7 +30,7 @@ class RackState {
 		
     }
 }
-
+//	Opening state
 let turn1 = new RackState(1, Array(6).fill(Array(7).fill(0)));
 
 class Cell {
@@ -71,16 +71,20 @@ class Cell {
 	// }
 }
 
+let whereClicked = '',
+    clickedCol = '',
+	rackCols = 7,
+    rackRows = 5; // what is going on?
+
 function controller() {
-    let rackCols = 7,
-        rackRows = 6;
 
     initCells(rackRows, rackCols);
-
 
     const wholeRack = document.getElementById('rack');
 
     wholeRack.addEventListener('click', moveRegistered);
+ 
+    dropChip(rackRows, clickedCol, RackState.whatTurnIsIt())
 }
 
 let cell = [];
@@ -93,14 +97,12 @@ function initCells(noOfRows, noOfColumns) {
         }
     }
 }
+
 controller();
 
-function moveRegistered(mouseEvent) {
-    let whereClicked = mouseEvent.target.getAttribute('id'),
-        clickedCol = whereClicked[1],
-        rackRows = 5; // what is going on?
-	
-    dropChip(rackRows, clickedCol, RackState.whatTurnIsIt()); //feels like spaghetti happening
+function moveRegistered(mouseEvent) { // starting to delete this for flow?
+    whereClicked = mouseEvent.target.getAttribute('id');
+    clickedCol = whereClicked[1];
 }
 
 function dropChip(lowestRow, colClicked, chipColor) { // so call with game board size, event clickcol, and whos turn it is or chipcolor?
