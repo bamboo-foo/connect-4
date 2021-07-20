@@ -26,7 +26,7 @@ class RackState {
 		return this.#turns;
 	}
 
-	static undpo() {
+	static undo() {
 		
 	}
 }

@@ -1,99 +1,91 @@
-function dangerMines(noOfMines, boardSize) { //call with difficulty level and No of columns
-    let randArr = [];
-    for (let i = 0; i < noOfMines; i++) {
-        let randArrInner = [];
-        randArrInner.push(Math.floor(Math.random()*boardSize));
-        randArrInner.push(Math.floor(Math.random()*boardSize));
-        randArr.push(randArrInner);
+class RackState {
+    
+    static #turns = 0;
+	
+	constructor(turn, rack) {
+        this.turn = turn;
+		this.rack = rack; // matrix with 0 empty 1 p1 2 p2
+		RackState.#turns++;
+	}
+    
+	isCellCaptured(row, col) {
+        return this.rack[row][col];
+	}
+    
+	captureCell(row, col, captor) {
+        let turn2 = new RackState(RackState.whatTurnIsIt() + 1, turn1.rack);
+		if (captor === 'red') {
+            turn2.rack[row][col] = 1;
+		} else if (captor === 'blue') {
+            turn2.rack[row][col] = 2;
+		}
+		console.log(turn2);
+	}
+    
+	static whatTurnIsIt() {
+        return this.#turns;
+	}
+    
+	static undo() {
+		
     }
-    return randArr;
-} 
+}
 
-//console.log(dangerMines(10 * 1.5, 8)); // remember you need to call with more than you need in case they target the same cell.
+let turn1 = new RackState(1, Array(6).fill(Array(7).fill(0)));
 
 class Cell {
-    constructor(rowIdx, colIdx) {
-        this.rowIdx = rowIdx;
-        this.colIdx = colIdx;
-        this.hasMine = false;
-        this.hint = 0; // this will also have to be moved to state model!!!
-        this.open = false; // this is for undo? so this state will be pushed then upon opne. so this should not even be here... this for now nonexistant and soon to be in the boardState object model
-    }
+	constructor(row, col) {
+		this.row = row;
+		this.col = col;
+	}
 
-    open() {
-        if (this.hasMine) {
-            return 'X'; //testing for now
-        } //otherwise we can call open on more cells around us....but then this should also check if a hint or a border cell? or not propogate to those?
+	dropHere(chipColor) { // this needs turn
+		// remember to hadnle rackState
+		//if filled return -1;
+		//get state
+		if (turn1.isCellCaptured(this.row, this.col)) { // is this really an array? or like an object with many objects? they first key could be like an array then where it is the value and turn #
+			return 0; // this is a fail can't drop here can we return false?
+		} else {
+		console.log('cell is free')}
+            // 	turn1.captureCell(this.row, this.col, chipColor) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
+		// 	this.renderCell(chipColor)// render this change too...
+		// 	//this.isThereAWinner(chipColor); // should be done by controller. // spaghetti testing
+		// 	return 1;
+		// }
+	}
+	
+	renderCell(color) {
+		cell[this.row][this.col].setAttribute('style', `background-color: ${color}`);
+	}
 
-        // else open this state which should call or expose hints? and then call an around funciton that will get passed this.row and colIDx and call .open() methods on those until border  etc...
-    }
-
-    close() {
-
-    }
-
-    placeMine() {
-        //if it's contents empty then place a mine in cell and return 1
-        if (!this.hasMine) {
-            this.hasMine = true; // here we should call hints
-            return 1;
-        } else {
-            return 0;
-        }
-    }
+	//	This should be done by controller.
+	// isThereAWinner(color) {
+		// if (n === 0) {
+			// return
+			// }
+		// direction(?row, ?col, this.row, this.col) {
+			// direction(?row, ?col) {
+				// 
+			// }
+			// }
+	// }
 }
-
-class BoardState {
-
-}
-
-class Worker {
-    constructor(target) {
-        this.target = target;
-    }
-
-    plant() {
-        let ifSuccessful = cell[this.target[0]][this.target[1]].placeMine();
-        return ifSuccessful;
-    }
-}
-
-let board = {};
 
 function controller() {
-    let boardSize = 7,
-        rackRows = 6,
-        noOfMines = 10,
-        seedsForMines = dangerMines(noOfMines * 1.5, boardSize);
+    let rackCols = 7,
+        rackRows = 6;
 
-    initBoard(rackRows, boardSize);
-
-    console.log(seedsForMines); //display testing
-
-    supervisor(noOfMines, seedsForMines); // is this like init?This is from settings got to read that !! puts mines on board model `cell`
-
-    const wholeBoard = document.getElementById('board');
-
-    wholeBoard.addEventListener('click', moveRegistered);
+    initCells(rackRows, rackCols);
 
 
-}
+    const wholeRack = document.getElementById('rack');
 
-function supervisor(plantingCells, randomIdxCells) {
-    let i = 0;
-    let successfulAssignment = 1;
-    while (successfulAssignment < plantingCells) { // second part is safety for now
-        let worker = new Worker(randomIdxCells[i])
-        let success = worker.plant();
-        successfulAssignment = successfulAssignment + success; // I may have to track success cases in another variable and i for moving through the array because upon failure it is not assigning workers new targets.  so after duplication it fails.
-        i++;
-        // randomIdxCells.forEach( pair => console.log(cell[pair[0]][pair[1]]));
-    }
+    wholeRack.addEventListener('click', moveRegistered);
 }
 
 let cell = [];
 
-function initBoard(noOfRows, noOfColumns) {
+function initCells(noOfRows, noOfColumns) {
     for (let i = 0; i < noOfRows; i++ ) {
         cell[i] = [];
         for (let j = 0; j < noOfColumns; j++) {
@@ -101,25 +93,31 @@ function initBoard(noOfRows, noOfColumns) {
         }
     }
 }
-
 controller();
 
 function moveRegistered(mouseEvent) {
     let whereClicked = mouseEvent.target.getAttribute('id'),
         clickedCol = whereClicked[1],
-        clickedRow = whereClicked[0];
+        rackRows = 5; // what is going on?
+	
+    dropChip(rackRows, clickedCol, RackState.whatTurnIsIt()); //feels like spaghetti happening
+}
 
-    let mine = cell[clickedRow][clickedCol].open();
-    mouseEvent.target.innerText = mine;
-
-} 
-
-function lookAround(row, col, cb) {
-    for (let i = row - 1; i < row + 1; i++) {
-        for (let j = col + 1; col < col + 1; j++ ) {// remember to escape self?
-            if (!((i === row)&&(j === col))) {
-                cell[i][j];
-            }
-        }
-    }
+function dropChip(lowestRow, colClicked, chipColor) { // so call with game board size, event clickcol, and whos turn it is or chipcolor?
+	if (chipColor % 2) { // feels like spaghetti
+		chipColor = 'red';
+	} else {
+		chipColor = 'blue';
+	}
+    console.log(cell[lowestRow][colClicked].dropHere(chipColor));
+	// can we recurse here too? call a method on bottom in col, and that method if 
+	// let cellEmpty = 1; //assumes empty
+    // let j = 0;
+	// while ((cellEmpty)&&(j<20)) { // put safety in (&&(j<20))
+	// 	let cellFilled = 0;
+	// 	cellFilled = cell[lowestRow][colClicked].dropHere(chipColor);
+	// 	cellEmpty = cellEmpty + cellFilled; //wasCellFilled()
+	// 	lowestRow = lowestRow - 1; //moveUp()
+	// 	j++; // safety
+	// }
 }
