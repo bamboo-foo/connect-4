@@ -123,7 +123,7 @@ function controller() {
 
     initCells(rackRows, rackCols);
 	
-	let turn1 = new RackState(1, Array(6).fill(Array(7).fill(0));
+	let turn1 = new RackState(1, Array(6).fill(Array(7).fill(0)));
 
     const wholeRack = document.getElementById('rack');
 
