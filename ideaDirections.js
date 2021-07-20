@@ -1,11 +1,33 @@
 class RackState {
+
+	static #turns = 0;
+	
 	constructor(turn, rack) {
 		this.turn = turn;
 		this.rack = rack; // matrix with 0 empty 1 p1 2 p2
+		RackState.#turns++;
 	}
 
 	isCellCaptured(row, col) {
+		return this.rack[row][col];
+	}
 
+	captureCell(row, col, captor) {
+		let turn2 = new RackState(RackState.whatTurnIsIt() + 1, turn1);
+		if (captor === 'red') {
+			turn2.rack[row][col] = 1;
+		} else if (captor === 'blue') {
+			turn2.rack[row][col] = 2;
+		}
+		
+	}
+
+	static whatTurnIsIt() {
+		return this.#turns;
+	}
+
+	static undpo() {
+		
 	}
 }
 
@@ -16,14 +38,14 @@ class Cell {
 		this.filled = false;// rack states
 	}
 
-	dropHere(chipColor) {
+	dropHere(chipColor) { // this needs turn
 		// remember to hadnle rackState
 		//if filled return -1;
 		//get state
-		if (rackState[rackState.length - 1].isCellCaptured(this.row, this.col)) { // is this really an array? or like an object with many objects? they first key could be like an array then where it is the value and turn #
+		if (turn1.isCellCaptured(this.row, this.col)) { // is this really an array? or like an object with many objects? they first key could be like an array then where it is the value and turn #
 			return 0; // this is a fail can't drop here can we return false?
 		} else {
-			rackState[rackState.length - 1].captureCell(this.row, this.col, chipColor) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
+			turn1.captureCell(this.row, this.col, chipColor) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
 			this.renderCell(chipColor)// render this change too...
 			this.isThereAWinner(chipColor); // should be done by controller.
 			return 1;
@@ -57,14 +79,14 @@ function cardinalAround(centralRow, centralCol) {
 		},
 		mirroredDirections = principalDirections.map();// how to do *-1 on it?
 		
-	}
+}
 	
 	// So below is some idea of how to take ordinal? vector and scale them 
 	
-	let myDirArr = Object.values(principalDirections);
-	let scaledVectors = myDirArr.map((direction) => {
-		let s = 0;
-		let ourArrCells = [];
+let myDirArr = Object.values(principalDirections);
+let scaledVectors = myDirArr.map((direction) => {
+	let s = 0;
+	let ourArrCells = [];
     while (s < 4) {
 		ourArrCells.push(direction.map( pos => pos * s));
         s++;
@@ -72,7 +94,14 @@ function cardinalAround(centralRow, centralCol) {
     return ourArrCells;
 });
 
+// I am thinking of splitting below reusing allowing a cb and calling it going up.  so you can see if to fill a cell or to animate a chip dropping through
+
 function dropChip(lowestRow, colClicked, chipColor) { // so call with game board size, event clickcol, and whos turn it is or chipcolor?
+	if (chipColor % 2) {
+		chipColor = 'red';
+	} else {
+		chipColor = 'blue';
+	}
 	// can we recurse here too? call a method on bottom in col, and that method if 
 	let cellEmpty = 1; //assumes empty
 	while ((cellEmpty)&&(j<20)) { // put safety in (&&(j<20))
@@ -94,7 +123,7 @@ function controller() {
 
     initCells(rackRows, rackCols);
 	
-	initRack('red', )
+	let turn1 = new RackState(1, Array(6).fill(Array(7).fill(0));
 
     const wholeRack = document.getElementById('rack');
 
@@ -118,8 +147,9 @@ function moveRegistered(mouseEvent) {
     let whereClicked = mouseEvent.target.getAttribute('id'),
         clickedCol = whereClicked[1];
 
-	dropChip(rackRows, clickedCol, rackState.turn);
+	dropChip(rackRows, clickedCol, RackState.whatTurnIsIt());
 
     // let mine = cell[clickedRow][clickedCol].dropChip(); // throwback it's mine tho (the cell)
     // mouseEvent.target.innerText = mine;
 } 
+
