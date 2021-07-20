@@ -61,11 +61,12 @@ class Worker {
 let board = {};
 
 function controller() {
-    let boardSize = 8,
+    let boardSize = 7,
+        rackRows = 6,
         noOfMines = 10,
         seedsForMines = dangerMines(noOfMines * 1.5, boardSize);
 
-    initBoard(boardSize);
+    initBoard(rackRows, boardSize);
 
     console.log(seedsForMines); //display testing
 
@@ -92,8 +93,8 @@ function supervisor(plantingCells, randomIdxCells) {
 
 let cell = [];
 
-function initBoard(noOfColumns) {
-    for (let i = 0; i < noOfColumns; i++ ) {
+function initBoard(noOfRows, noOfColumns) {
+    for (let i = 0; i < noOfRows; i++ ) {
         cell[i] = [];
         for (let j = 0; j < noOfColumns; j++) {
             cell[i][j] = new Cell(i, j);
