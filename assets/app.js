@@ -139,3 +139,19 @@ function dropChip(lowestRowIdx, colClicked, chipColor) { // so call with game bo
 		j++; // safety
 	}
 }
+
+
+// win logic
+// this should take any cell and return an array of vectors(arrays)
+// The vectors should be the location such taht when you get the contents if every is the same then that contents is the winner.
+
+function cardinalAround(referenceCellRowIdx, referenceCellColIdx) {
+	const unitVectors = { //  these are summing on top basically
+		right: [0, 1], // so for left and down, etc... we can multiply these principals by -1
+		up: [-1, 0],
+		diagUpRight: [-1, 1],
+		  diagDownRight: [1, 1]
+		},
+		mirroredDirections = principalDirections.map();// how to do *-1 on it?
+		
+}
