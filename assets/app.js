@@ -1,5 +1,5 @@
 class RackState {
-    
+    //	todo: if you go back to a previous rack state and a move is made the future rack states should be deleted.  like new game you could undo, but after you make one move you can't undo to previous game same with normal undo redo can't undo once make a move and push redo to go forward to previous game's state.
     static #turns = 0;
 	
 	constructor(turn, rack) {
@@ -13,7 +13,7 @@ class RackState {
 	}
     
 	captureCell(row, col, captor) {
-        let turn2 = new RackState(RackState.whatTurnIsIt() + 1, turn1.rack);
+        let turn2 = new RackState(RackState.whatTurnIsIt() + 1, turn1.rack); // so turn1 should rep the current turn turn2 is new one...
 		if (captor === 'red') {
             turn2.rack[row][col] = 1;
 		} else if (captor === 'blue') {
@@ -48,9 +48,9 @@ class Cell {
 			return 0; // this is a fail can't drop here can we return false?
 		} else {
 			this.renderCell(chipColor)// render this change too...
+			turn1.captureCell(this.row, this.col, chipColor) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
 			return 1;
 		}
-        //    turn1.captureCell(this.row, this.col, chipColor) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
 		// 	//this.isThereAWinner(chipColor); // should be done by controller. // spaghetti testing
 		// 	return 1;
 		// }
