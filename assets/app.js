@@ -41,13 +41,15 @@ class Cell {
 		// remember to hadnle rackState
 		//if filled return -1;
 		//get state
-		console.log('hi');
+		// console.log('hi');
 		// console.log(this.row, this.col);
-		// if (turn1.isCellCaptured(this.row, this.col)) { // is this really an array? or like an object with many objects? they first key could be like an array then where it is the value and turn #
-		// 	return 0; // this is a fail can't drop here can we return false?
-		// } else {
-		// console.log('cell is free')}
-            // 	turn1.captureCell(this.row, this.col, chipColor) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
+		if (turn1.isCellCaptured(this.row, this.col)) { // is this really an array? or like an object with many objects? they first key could be like an array then where it is the value and turn #
+			return 0; // this is a fail can't drop here can we return false?
+		} else {
+			console.log('cell is free');
+			return 1;
+		}
+        //    turn1.captureCell(this.row, this.col, chipColor) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
 		// 	this.renderCell(chipColor)// render this change too...
 		// 	//this.isThereAWinner(chipColor); // should be done by controller. // spaghetti testing
 		// 	return 1;
@@ -73,8 +75,15 @@ class Cell {
 				
 //	Init
 //	Opening state and init cells
-let turn1 = new RackState(1, Array(6).fill(Array(7).fill(0))),
+let initBoardArr = [];
+
+for (let i = 0; i < 6; i++) {
+    initBoardArr[i] = new Array(7).fill(0);
+};
+
+let turn1 = new RackState(1, initBoardArr), // this is causing a serious PROBLEM!! when you try to mod one spot it does the spot in every array!!
 	cell = [];
+
 
 const wholeRack = document.getElementById('rack');
 
@@ -116,17 +125,17 @@ function dropChip(lowestRowIdx, colClicked, chipColor) { // so call with game bo
 	} else {
 		chipColor = 'blue';
 	}
-	console.log(lowestRowIdx, colClicked);
-	console.log(cell[lowestRowIdx][colClicked]);
+
 	// cell[lowestRowIdx][colClicked].dropHere(chipColor);
 	// can we recurse here too? call a method on bottom in col, and that method if 
-	// let cellEmpty = 1; //assumes empty
-    // let j = 0;
-	// while ((cellEmpty)&&(j<20)) { // put safety in (&&(j<20))
-	// 	let cellFilled = 0;
-	// 	cellFilled = cell[lowestRowIdx][colClicked].dropHere(chipColor);
-	// 	cellEmpty = cellEmpty + cellFilled; //wasCellFilled()
-	// 	lowestRowIdx = lowestRowIdx - 1; //moveUp()
-	// 	j++; // safety
-	// }
+	let cellEmpty = 1; //assumes empty
+    let j = 0;
+	while ((cellEmpty)&&(j<20)) { // put safety in (&&(j<20))
+		let cellFilled = 0;
+		console.log(lowestRowIdx, colClicked);
+		cellFilled = cell[lowestRowIdx][colClicked].dropHere(chipColor);
+		cellEmpty = cellEmpty - cellFilled; //wasCellFilled()
+		lowestRowIdx = lowestRowIdx - 1; //moveUp() NOT STOPPING AT 0 goes below
+		j++; // safety
+	}
 }
