@@ -35,6 +35,7 @@ class Cell {
 	constructor(row, col) {
 		this.row = row;
 		this.col = col;
+		this.el = document.getElementById(`${this.row}${this.col}`);
 	}
 
 	dropHere(chipColor) { // this needs turn
@@ -46,18 +47,17 @@ class Cell {
 		if (turn1.isCellCaptured(this.row, this.col)) { // is this really an array? or like an object with many objects? they first key could be like an array then where it is the value and turn #
 			return 0; // this is a fail can't drop here can we return false?
 		} else {
-			console.log('cell is free');
+			this.renderCell(chipColor)// render this change too...
 			return 1;
 		}
         //    turn1.captureCell(this.row, this.col, chipColor) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
-		// 	this.renderCell(chipColor)// render this change too...
 		// 	//this.isThereAWinner(chipColor); // should be done by controller. // spaghetti testing
 		// 	return 1;
 		// }
 	}
 	
 	renderCell(color) {
-		cell[this.row][this.col].setAttribute('style', `background-color: ${color}`);
+		this.el.setAttribute('style', `background-color: ${color}`);
 	}
 	
 	//	This should be done by controller.
