@@ -145,13 +145,27 @@ function dropChip(lowestRowIdx, colClicked, chipColor) { // so call with game bo
 // this should take any cell and return an array of vectors(arrays)
 // The vectors should be the location such taht when you get the contents if every is the same then that contents is the winner.
 
-function cardinalAround(referenceCellRowIdx, referenceCellColIdx) {
+function cardinalAround(referenceCellRowIdx, referenceCellColIdx) { // really this should be called like possibleWinCells
 	const unitVectors = { //  these are summing on top basically
 		right: [0, 1], // so for left and down, etc... we can multiply these principals by -1
 		up: [-1, 0],
 		diagUpRight: [-1, 1],
 		  diagDownRight: [1, 1]
-		},
-		mirroredDirections = principalDirections.map();// how to do *-1 on it?
-		
+		};
+		//mirroredDirections = pr.map();// how to do *-1 on it?
+	const scaledVectors = {};
+
+	//Object.keys(unitVectors).map((key) => scaledVectors[key] = unitVectors[key] * i)
+	for (const uVector in unitVectors) {
+		let scalingArr = [];
+		for (let i = 0; i < 4; i++) {
+			let scalingPoint = [];
+			for (let j = 0; j < 2; j++) {
+				scalingPoint.push(unitVectors[uVector][j] * i)
+			}
+			scalingArr.push(scalingPoint);
+		}
+		scaledVectors[uVector] = scalingArr;
+	}
+	console.log(scaledVectors);		
 }
