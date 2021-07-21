@@ -14,7 +14,7 @@ class RackState {
     
 	captureCell(row, col, captor) {
         let turn2 = new RackState(RackState.whatTurnIsIt() + 1, turn1.rack); // so turn1 should rep the current turn turn2 is new one...
-		if (captor === 'red') {
+		if (captor === 'goldenrod') {
             turn2.rack[row][col] = 1;
 		} else if (captor === 'blue') {
             turn2.rack[row][col] = 2;
@@ -121,7 +121,7 @@ function moveRegistered(mouseEvent) { // starting to delete this for flow?
 
 function dropChip(lowestRowIdx, colClicked, chipColor) { // so call with game board size, event clickcol, and whos turn it is or chipcolor?
 	if (chipColor % 2) { // feels like spaghetti
-		chipColor = 'red';
+		chipColor = 'goldenrod';
 	} else {
 		chipColor = 'blue';
 	}

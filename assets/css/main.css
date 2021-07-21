@@ -1,8 +1,8 @@
 * {
-    --bgnd-color: rgb(71, 21, 71);
-    --bgnd-light: purple;
-    --bgnd-dark: rgb(50, 7, 70);
-    color: rgb(209, 209, 209);
+    --bgnd-color: rgb(146, 137, 146);
+    --bgnd-light: rgb(158, 224, 149);
+    --bgnd-dark: rgb(140, 218, 129);
+    color: rgb(66, 59, 59);
     font-family: 'Poppins', sans-serif;
 }
 
@@ -48,7 +48,7 @@ aside {
 }
 
 .buttons div {
-    border: wheat 1px solid;
+    border: rgb(51, 50, 47) 1px solid;
     margin: 2%;
     padding: 1em 1.5em;
     border-radius: 2em;
