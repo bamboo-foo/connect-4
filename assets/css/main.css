@@ -1,5 +1,5 @@
 * {
-    --bgnd-color: rgb(146, 137, 146);
+    --bgnd-color: rgb(221, 219, 221);
     --bgnd-light: rgb(158, 224, 149);
     --bgnd-dark: rgb(140, 218, 129);
     color: rgb(66, 59, 59);
@@ -12,6 +12,7 @@ body {
     flex-direction: column;
     min-width: 0;
     margin: 0;
+    align-items: center;
 }
 
 footer {
@@ -23,8 +24,8 @@ header {
     background-color: var(--bgnd-light);
     display: flex;
     width: 100%;
-    justify-content: space-between;
-    font-size: 3.5em;
+    font-size: 1.75em;
+    padding-left: 5%;
 }
 
 main {
@@ -50,9 +51,9 @@ aside {
 .buttons div {
     border: rgb(51, 50, 47) 1px solid;
     margin: 2%;
-    padding: 1em 1.5em;
+    padding: 0.75em 1em;
     border-radius: 2em;
-    font-size: 1.25em;
+    font-size: 1em;
 }
 
 .buttons div:active {
@@ -62,6 +63,6 @@ aside {
 
 .message {
     align-self: center;
-    font-size: 3em;
+    font-size: 1.5em;
     font-style: italic;
 }
