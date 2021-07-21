@@ -41,10 +41,12 @@ class Cell {
 		// remember to hadnle rackState
 		//if filled return -1;
 		//get state
-		if (turn1.isCellCaptured(this.row, this.col)) { // is this really an array? or like an object with many objects? they first key could be like an array then where it is the value and turn #
-			return 0; // this is a fail can't drop here can we return false?
-		} else {
-		console.log('cell is free')}
+		console.log('hi');
+		// console.log(this.row, this.col);
+		// if (turn1.isCellCaptured(this.row, this.col)) { // is this really an array? or like an object with many objects? they first key could be like an array then where it is the value and turn #
+		// 	return 0; // this is a fail can't drop here can we return false?
+		// } else {
+		// console.log('cell is free')}
             // 	turn1.captureCell(this.row, this.col, chipColor) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
 		// 	this.renderCell(chipColor)// render this change too...
 		// 	//this.isThereAWinner(chipColor); // should be done by controller. // spaghetti testing
@@ -81,16 +83,16 @@ wholeRack.addEventListener('click', controller);
 let whereClicked = '',
 	clickedCol = '',
 	rackCols = 7,
-	rackRows = 5; // what is going on?
+	rackRows = 6; // what is going on? this initiates cell watch out for other calls
 
 function controller(mouseEvent) {
 	
     initCells(rackRows, rackCols);
 	
 	whereClicked = mouseEvent.target.getAttribute('id');
-	clickedCol = whereClicked[1];
- 
-    dropChip(rackRows, clickedCol, RackState.whatTurnIsIt())
+	clickedCol = parseInt(whereClicked[1]);
+	
+    dropChip(rackRows - 1, clickedCol, RackState.whatTurnIsIt())
 }
 
 
@@ -108,21 +110,23 @@ function initCells(noOfRows, noOfColumns) {
 function moveRegistered(mouseEvent) { // starting to delete this for flow?
 }
 
-function dropChip(lowestRow, colClicked, chipColor) { // so call with game board size, event clickcol, and whos turn it is or chipcolor?
+function dropChip(lowestRowIdx, colClicked, chipColor) { // so call with game board size, event clickcol, and whos turn it is or chipcolor?
 	if (chipColor % 2) { // feels like spaghetti
 		chipColor = 'red';
 	} else {
 		chipColor = 'blue';
 	}
-    console.log(lowestRow, colClicked) //.dropHere(chipColor));
+	console.log(lowestRowIdx, colClicked);
+	console.log(cell[lowestRowIdx][colClicked]);
+	// cell[lowestRowIdx][colClicked].dropHere(chipColor);
 	// can we recurse here too? call a method on bottom in col, and that method if 
 	// let cellEmpty = 1; //assumes empty
     // let j = 0;
 	// while ((cellEmpty)&&(j<20)) { // put safety in (&&(j<20))
 	// 	let cellFilled = 0;
-	// 	cellFilled = cell[lowestRow][colClicked].dropHere(chipColor);
+	// 	cellFilled = cell[lowestRowIdx][colClicked].dropHere(chipColor);
 	// 	cellEmpty = cellEmpty + cellFilled; //wasCellFilled()
-	// 	lowestRow = lowestRow - 1; //moveUp()
+	// 	lowestRowIdx = lowestRowIdx - 1; //moveUp()
 	// 	j++; // safety
 	// }
 }
