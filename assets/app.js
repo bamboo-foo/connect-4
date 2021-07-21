@@ -27,7 +27,7 @@ class RackState {
 	}
     
 	static undo() {
-		
+		//move to oprevious state and then rerender every cell that is non zero in that rack state
     }
 }
 

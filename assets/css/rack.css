@@ -10,14 +10,18 @@
     display: flex;
     width: 90%;
     justify-content: center;
+    background-color: goldenrod;
+    padding-top: 1%;
 }
 
 .cell {
-    background-color: goldenrod;
     border: 2px solid black;
+    background-color: gray;
+    border-radius: 8em;
     width: 9vw;
     height: 9vw;
     min-width: 0;
     box-shadow: 1px  rgb(102, 84, 84) ;
+    /* padding: 0 0.5%; */
     /* flex: 1 1 0; */
 }
