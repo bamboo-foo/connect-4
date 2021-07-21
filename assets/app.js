@@ -130,7 +130,7 @@ function dropChip(lowestRowIdx, colClicked, chipColor) { // so call with game bo
 	// can we recurse here too? call a method on bottom in col, and that method if 
 	let cellEmpty = 1; //assumes empty
     let j = 0;
-	while ((cellEmpty)&&(j<20)) { // put safety in (&&(j<20))
+	while ((cellEmpty)&&(j<20)&&(lowestRowIdx >= 0)) { // put safety in (&&(j<20)) hopefully stops indexing out of bounds
 		let cellFilled = 0;
 		console.log(lowestRowIdx, colClicked);
 		cellFilled = cell[lowestRowIdx][colClicked].dropHere(chipColor);
