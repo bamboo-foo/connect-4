@@ -17,9 +17,9 @@ class RackState {
 		// console.log('in captureCell' + RackState.whatTurnIsIt())
 		// console.log(previousRack)
         turn[RackState.whatTurnIsIt() + 1] = new RackState(RackState.whatTurnIsIt() + 1, previousRack); // so turn1 should rep the current turn turn2 is new one...
-		console.log('after turn assignment creation new state' + RackState.whatTurnIsIt())
+		// console.log('after turn assignment creation new state' + RackState.whatTurnIsIt())
 		if (captor === 'goldenrod') {
-			console.log('in if statement' + RackState.whatTurnIsIt())
+			// console.log('in if statement' + RackState.whatTurnIsIt())
             turn[RackState.whatTurnIsIt()].rack[row][col] = 1;
 		} else if (captor === 'blue') {
             turn[RackState.whatTurnIsIt()].rack[row][col] = 2;
@@ -52,7 +52,8 @@ class Cell {
 		//get state
 		// console.log('hi');
 		// console.log(this.row, this.col);
-		console.log('in dropHere' + RackState.whatTurnIsIt())
+		console.log(typeof this.row)
+		console.log('in dropHere' + this.row, this.col)
 		if (turn[RackState.whatTurnIsIt()].isCellCaptured(this.row, this.col)) { // is this really an array? or like an object with many objects? they first key could be like an array then where it is the value and turn #
 			return 0; // this is a fail can't drop here can we return false?
 		} else {
@@ -121,7 +122,6 @@ function controller(mouseEvent) {
 	
 	whereClicked = mouseEvent.target.getAttribute('id');
 	clickedCol = parseInt(whereClicked[1]);
-	console.log(RackState.whatTurnIsIt())
     dropChip(rackRows - 1, clickedCol, RackState.whatTurnIsIt())
 }
 
@@ -145,7 +145,17 @@ function handleUndo(mouseEvt) {
 		// cell[i] = [];
 		for (let j = 0; j < 7; j++) {
 			// console.log(cell)
-			cell[i][j].dropHere('red');
+			switch(turn[RackState.whatTurnIsIt()].rack[i][j]) {
+				case 0:	
+					cell[i][j].renderCell('rgb(49, 42, 42)');
+					break;
+				case 1:	
+					cell[i][j].renderCell('goldenrod');
+					break;
+				case 2:	
+					cell[i][j].renderCell('blue');
+					break;
+			} 
 		}
 	}
 }
