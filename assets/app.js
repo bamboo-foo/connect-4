@@ -150,16 +150,21 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 		right: [0, 1], // so for left and down, etc... we can multiply these principals by -1
 		up: [-1, 0],
 		diagUpRight: [-1, 1],
-		  diagDownRight: [1, 1]
-		};
+		diagDownRight: [1, 1]
+	};
 		//mirroredDirections = pr.map();// how to do *-1 on it?
 	const scaledVectors = {};
 
 	//Object.keys(unitVectors).map((key) => scaledVectors[key] = unitVectors[key] * i)
 	for (const uVector in unitVectors) {
-		let scalingArr = [];
-		for (let i = 0; i < 4; i++) {
+		let scalingArr = [],
+			scaleFactor = 3;
+
+		//  The unit vectors are scaled in both directions
+		for (let i = scaleFactor * -1; i <= scaleFactor; i++) {
 			let scalingPoint = [];
+
+			// j helps you set up the x,y of each point in the scaled vector
 			for (let j = 0; j < 2; j++) {
 				scalingPoint.push(unitVectors[uVector][j] * i)
 			}
@@ -176,13 +181,14 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 			// limit border, return only if inbounds, second filter for length > 3
 			posArr = [];
 			posArr[0] = refCellRowIdx + translation[0];
-			posArr[1] = refCellRowIdx + translation[1];
+			posArr[1] = refCellColIdx + translation[1];
 			if ((posArr[0] >= 0)&&(posArr[0] < rackRows)&&(posArr[1] >= 0)&&(posArr[1] < rackCols)) {
 				return posArr;
 			}
 		})); //so when checking for every first off limit this maps output and check length to eliminate out of bounds or borders duplication 
 	}
+
 	let checkCells = cellsToBeChecked.map( (array) => array.filter( (pos) => typeof pos === 'object'));
-	let validCheckCells = checkCells.filter( array => array.length === 4 );
-	console.log(validCheckCells);
+//	let validCheckCells = checkCells.filter( array => array.length === 4 ); um we need those cells, what if three, so ref plus 2 right, and .... 1 left!
+	console.log(checkCells); // now map a new return where you go to the cells in question and call the isCellCaptured method on the cell, but no it must return whoCaptured because we mut check or simply if every() then get the DOM nodes and change their color or whatevs
 }
