@@ -168,14 +168,21 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 		scaledVectors[uVector] = scalingArr;
 	}
 	// console.log(scaledVectors);
-	let posArr = [];
+	let cellsToBeChecked = [];
 	for (vector in scaledVectors) {
-		let cellsToBeChecked = scaledVectors[vector].map((translation) => {
+		let posArr = [];
+		cellsToBeChecked.push(scaledVectors[vector].map((translation) => {
+			// console.log(translation);
+			// limit border, return only if inbounds, second filter for length > 3
 			posArr = [];
 			posArr[0] = refCellRowIdx + translation[0];
 			posArr[1] = refCellRowIdx + translation[1];
-			return posArr;
-		})
+			if ((posArr[0] >= 0)&&(posArr[0] < rackRows)&&(posArr[1] >= 0)&&(posArr[1] < rackCols)) {
+				return posArr;
+			}
+		})); //so when checking for every first off limit this maps output and check length to eliminate out of bounds or borders duplication 
 	}
-	console.log(cellsToBeChecked);
+	let checkCells = cellsToBeChecked.map( (array) => array.filter( (pos) => typeof pos === 'object'));
+	let validCheckCells = checkCells.filter( array => array.length === 4 );
+	console.log(validCheckCells);
 }
