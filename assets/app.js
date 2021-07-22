@@ -19,7 +19,7 @@ class RackState {
 		} else if (captor === 'blue') {
             turn2.rack[row][col] = 2;
 		}
-		console.log(turn2);
+		//console.log(turn2);
 	}
     
 	static whatTurnIsIt() {
@@ -48,7 +48,8 @@ class Cell {
 			return 0; // this is a fail can't drop here can we return false?
 		} else {
 			this.renderCell(chipColor)// render this change too...
-			turn1.captureCell(this.row, this.col, chipColor) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
+			turn1.captureCell(this.row, this.col, chipColor)
+			cardinalAround(this.row, this.col) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
 			return 1;
 		}
 		// 	//this.isThereAWinner(chipColor); // should be done by controller. // spaghetti testing
@@ -132,7 +133,7 @@ function dropChip(lowestRowIdx, colClicked, chipColor) { // so call with game bo
     let j = 0;
 	while ((cellEmpty)&&(j<20)&&(lowestRowIdx >= 0)) { // put safety in (&&(j<20)) hopefully stops indexing out of bounds
 		let cellFilled = 0;
-		console.log(lowestRowIdx, colClicked);
+		//console.log(lowestRowIdx, colClicked);
 		cellFilled = cell[lowestRowIdx][colClicked].dropHere(chipColor);
 		cellEmpty = cellEmpty - cellFilled; //wasCellFilled()
 		lowestRowIdx = lowestRowIdx - 1; //moveUp() NOT STOPPING AT 0 goes below
@@ -220,27 +221,22 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 		//console.log(direction);
 		for (let i = 0; i < direction.length - 3; i++) {
 			possibleWinningArrays = (direction.slice(i, i + 4));
-			console.log(possibleWinningArrays)
+			//console.log(possibleWinningArrays)
 			
 			// possibleWinningArrays.every( cell => console.log(cell))
 
-			if (possibleWinningArrays.every( cell => (cell[2] === 1)))
-
-			// if (possbi.slice(i, i + 4).forEach( combo => {
-				//	console.log(combo)
-				// if (combo.every( position => position[2] === '1')) {
-					// 	console.log(combo);
-					// 	return combo;
-					// } else if (combo.every( position => position[2] === '2')) {
-						// 	console.log(combo);
-						// 	return combo;
-						// }
-						// })) 
-						{
-							console.log('1 is winner')
-						}
+			if (possibleWinningArrays.every( cell => (cell[2] === 1))) {
+				//console.log(possibleWinningArrays)
+				winner(1, possibleWinningArrays);
+			} else if (possibleWinningArrays.every( cell => (cell[2] === 2))) {
+				winner(2, possibleWinningArrays);
+			}
 		}
 	})
-				//console.log(capturedDirections)
 }
-			
+
+function winner(winningPlayer, winningCells) {
+	console.log(`player ${winningPlayer} won at ${winningCells}`)
+	winningCells.forEach( circle => cell[circle[0]][circle[1]].renderCell('green'))
+	// delete event listener on rack
+}
