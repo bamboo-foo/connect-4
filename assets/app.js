@@ -35,6 +35,11 @@ class RackState {
 		//move to oprevious state and then rerender every cell that is non zero in that rack state
 		this.#turns = this.#turns - 1;
     }
+
+	static redo() {
+		//move to oprevious state and then rerender every cell that is non zero in that rack state
+		this.#turns = this.#turns + 1;
+    }
 }
 
 let turn = [];
@@ -106,10 +111,13 @@ const wholeRack = document.getElementById('rack'),
 	  redoEl = document.getElementById('redo'),
 	  newGameEl = document.getElementById('ng');
 
+
 wholeRack.addEventListener('click', controller);
 undoEl.addEventListener('click', handleUndo);
-// redoEl.addEventListener('click', handleRedo);
+redoEl.addEventListener('click', handleRedo);
 // newGameEl.addEventListener('click', handleNG);
+
+redoEl.disabled = true;
 
 let whereClicked = '',
 	clickedCol = '',
@@ -138,11 +146,23 @@ function initCells(noOfRows, noOfColumns) {
 
 function handleUndo(mouseEvt) {
 	// console.log(cell[0])
-	turn.pop();
+	// turn.pop();
 	RackState.undo();
+	reRender()
 	// console.log(cell[0])
+}
+
+function handleRedo(mouseEvt) {
+	// console.log(cell[0])
+	// turn.pop();
+	RackState.redo();
+	reRender()
+	// console.log(cell[0])
+}
+// controller();
+function reRender() {
 	for (let i = 0; i < 6; i++ ) {
-		// cell[i] = [];
+	// cell[i] = [];
 		for (let j = 0; j < 7; j++) {
 			// console.log(cell)
 			switch(turn[RackState.whatTurnIsIt()].rack[i][j]) {
@@ -159,8 +179,6 @@ function handleUndo(mouseEvt) {
 		}
 	}
 }
-
-// controller();
 
 function moveRegistered(mouseEvent) { // starting to delete this for flow?
 }
@@ -282,6 +300,7 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 
 function winner(winningPlayer, winningCells) {
 	wholeRack.removeEventListener('click', controller);
+	undoEl.removeEventListener('click', handleUndo);
 	winningCells.forEach( circle => cell[circle[0]][circle[1]].renderCell('green'));
 	
 	const messageEl = document.querySelector('.message');
