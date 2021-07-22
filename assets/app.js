@@ -190,5 +190,27 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 
 	let checkCells = cellsToBeChecked.map( (array) => array.filter( (pos) => typeof pos === 'object'));
 //	let validCheckCells = checkCells.filter( array => array.length === 4 ); um we need those cells, what if three, so ref plus 2 right, and .... 1 left!
-	console.log(checkCells); // now map a new return where you go to the cells in question and call the isCellCaptured method on the cell, but no it must return whoCaptured because we mut check or simply if every() then get the DOM nodes and change their color or whatevs
+	//console.log(checkCells); // now map a new return where you go to the cells in question and call the isCellCaptured method on the cell, but no it must return whoCaptured because we mut check or simply if every() then get the DOM nodes and change their color or whatevs
+	checkCells.forEach( (direction) => {
+		// let whoCapturedCells = direction.map( (cell) => {
+		// 	let row = cell[0],
+		// 		col = cell[1];
+
+		// 	return turn1.isCellCaptured[row][col];
+		// }) 
+
+		// Warning loss of index, which cell will you highlight?
+		
+		// fix warning
+
+		let cellNCapture = direction.map( cell => {
+			let row = cell[0],
+				col = cell[1];
+	
+			cell.push(turn1.isCellCaptured(row, col));
+			return cell;
+		})
+
+		console.log(cellNCapture);
+	})
 }
