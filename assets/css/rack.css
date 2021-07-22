@@ -2,17 +2,19 @@
     display: flex;
     width: 90%;
     border: 2% solid black;
-    flex-direction: column;
     align-items: center;
+    justify-content: center;
     padding-top: 10%;
+    /* flex-direction: column; */
 }
 
-.row {
+.col {
     display: flex;
-    width: 90%;
+    width: calc(90% / 7);
     justify-content: center;
     background-color: rgb(78, 45, 8);
     padding: 0.5% 0 0.5% 0;
+    flex-direction: column;
 }
 
 .cell {
