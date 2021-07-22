@@ -33,6 +33,7 @@ class RackState {
     
 	static undo() {
 		//move to oprevious state and then rerender every cell that is non zero in that rack state
+		this.#turns = this.#turns - 1;
     }
 }
 
@@ -99,9 +100,15 @@ turn[0] = new RackState(0, initBoardArr);
 // console.log(turn[0].rack[5])
 
 
-const wholeRack = document.getElementById('rack');
+const wholeRack = document.getElementById('rack'),
+	  undoEl = document.getElementById('undo'), //pop while length > 1
+	  redoEl = document.getElementById('redo'),
+	  newGameEl = document.getElementById('ng');
 
 wholeRack.addEventListener('click', controller);
+undoEl.addEventListener('click', handleUndo);
+// redoEl.addEventListener('click', handleRedo);
+// newGameEl.addEventListener('click', handleNG);
 
 let whereClicked = '',
 	clickedCol = '',
@@ -126,6 +133,21 @@ function initCells(noOfRows, noOfColumns) {
             cell[i][j] = new Cell(i, j);
         }
     }
+}
+
+
+function handleUndo(mouseEvt) {
+	// console.log(cell[0])
+	turn.pop();
+	RackState.undo();
+	// console.log(cell[0])
+	for (let i = 0; i < 6; i++ ) {
+		// cell[i] = [];
+		for (let j = 0; j < 7; j++) {
+			// console.log(cell)
+			cell[i][j].dropHere('red');
+		}
+	}
 }
 
 // controller();
