@@ -236,7 +236,11 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 }
 
 function winner(winningPlayer, winningCells) {
-	console.log(`player ${winningPlayer} won at ${winningCells}`)
-	winningCells.forEach( circle => cell[circle[0]][circle[1]].renderCell('green'))
+	wholeRack.removeEventListener('click', controller);
+	winningCells.forEach( circle => cell[circle[0]][circle[1]].renderCell('green'));
+	
+	const messageEl = document.querySelector('.message');
+
+	messageEl.innerText = (`Player ${winningPlayer} has won !!!`);
 	// delete event listener on rack
 }
