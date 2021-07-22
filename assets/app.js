@@ -211,6 +211,11 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 			return cell;
 		})
 
+		cellNCapture.forEach( direction => {
+			for (let i = 0; i < direction.length - 3; i++) {
+				
+			}
+		})
 		console.log(cellNCapture);
 	})
 }
