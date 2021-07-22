@@ -29,9 +29,9 @@
 }
 
 .rack :first-child {
-    padding-left: 0.5%;
+    padding-left:2%;
 }
 
 .rack :last-child {
-    padding-right: 0.5%;
+    padding-right: 2%;
 }

@@ -211,15 +211,30 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 			return cell;
 		})
 
-		cellNCapture.forEach( direction => {
-			//console.log(direction);
-			// for (let i = 0; i < direction.length - 3; i++) {
-			// 	console.log(direction.slice(i, i + 4))
-			// }
-		})
 		
 		return cellNCapture;
 	})
-
-	console.log(capturedDirections)
+	
+	let possibleWinningArrays = [];
+	capturedDirections.forEach( direction => {
+		//console.log(direction);
+		for (let i = 0; i < direction.length - 3; i++) {
+			possibleWinningArrays = (direction.slice(i, i + 4));
+			console.log(possibleWinningArrays)
+			// if (possbi.slice(i, i + 4).forEach( combo => {
+			//	console.log(combo)
+				// if (combo.every( position => position[2] === '1')) {
+				// 	console.log(combo);
+				// 	return combo;
+				// } else if (combo.every( position => position[2] === '2')) {
+				// 	console.log(combo);
+				// 	return combo;
+				// }
+			// })) 
+			{
+				
+			}
+		}
+	})
+	//console.log(capturedDirections)
 }
