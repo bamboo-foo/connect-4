@@ -1,6 +1,6 @@
 class RackState {
     //	todo: if you go back to a previous rack state and a move is made the future rack states should be deleted.  like new game you could undo, but after you make one move you can't undo to previous game same with normal undo redo can't undo once make a move and push redo to go forward to previous game's state.
-    static #turns = 0;
+    static #turns = -1;
 	
 	constructor(turn, rack) {
         this.turn = turn;
@@ -13,11 +13,16 @@ class RackState {
 	}
     
 	captureCell(row, col, captor) {
-        let turn2 = new RackState(RackState.whatTurnIsIt() + 1, turn1.rack); // so turn1 should rep the current turn turn2 is new one...
+		let previousRack = turn[RackState.whatTurnIsIt()].rack.map( row => row.map( cell => cell));
+		// console.log('in captureCell' + RackState.whatTurnIsIt())
+		// console.log(previousRack)
+        turn[RackState.whatTurnIsIt() + 1] = new RackState(RackState.whatTurnIsIt() + 1, previousRack); // so turn1 should rep the current turn turn2 is new one...
+		console.log('after turn assignment creation new state' + RackState.whatTurnIsIt())
 		if (captor === 'goldenrod') {
-            turn2.rack[row][col] = 1;
+			console.log('in if statement' + RackState.whatTurnIsIt())
+            turn[RackState.whatTurnIsIt()].rack[row][col] = 1;
 		} else if (captor === 'blue') {
-            turn2.rack[row][col] = 2;
+            turn[RackState.whatTurnIsIt()].rack[row][col] = 2;
 		}
 		//console.log(turn2);
 	}
@@ -30,6 +35,8 @@ class RackState {
 		//move to oprevious state and then rerender every cell that is non zero in that rack state
     }
 }
+
+let turn = [];
 
 class Cell {
 	constructor(row, col) {
@@ -44,11 +51,14 @@ class Cell {
 		//get state
 		// console.log('hi');
 		// console.log(this.row, this.col);
-		if (turn1.isCellCaptured(this.row, this.col)) { // is this really an array? or like an object with many objects? they first key could be like an array then where it is the value and turn #
+		console.log('in dropHere' + RackState.whatTurnIsIt())
+		if (turn[RackState.whatTurnIsIt()].isCellCaptured(this.row, this.col)) { // is this really an array? or like an object with many objects? they first key could be like an array then where it is the value and turn #
 			return 0; // this is a fail can't drop here can we return false?
 		} else {
 			this.renderCell(chipColor)// render this change too...
-			turn1.captureCell(this.row, this.col, chipColor)
+			//console.log(turn[RackState.whatTurnIsIt()].rack)
+			console.log('after calling render cell' + RackState.whatTurnIsIt());
+			turn[RackState.whatTurnIsIt()].captureCell(this.row, this.col, chipColor)
 			cardinalAround(this.row, this.col) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
 			return 1;
 		}
@@ -82,8 +92,11 @@ for (let i = 0; i < 6; i++) {
     initBoardArr[i] = new Array(7).fill(0);
 };
 
-let turn1 = new RackState(1, initBoardArr), // this is causing a serious PROBLEM!! when you try to mod one spot it does the spot in every array!!
-	cell = [];
+let cell = [];
+
+turn[0] = new RackState(0, initBoardArr);
+// Object.freeze(turn[0].rack);
+// console.log(turn[0].rack[5])
 
 
 const wholeRack = document.getElementById('rack');
@@ -101,7 +114,7 @@ function controller(mouseEvent) {
 	
 	whereClicked = mouseEvent.target.getAttribute('id');
 	clickedCol = parseInt(whereClicked[1]);
-	
+	console.log(RackState.whatTurnIsIt())
     dropChip(rackRows - 1, clickedCol, RackState.whatTurnIsIt())
 }
 
@@ -208,7 +221,7 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 			let row = cell[0],
 				col = cell[1];
 	
-			cell.push(turn1.isCellCaptured(row, col));
+			cell.push(turn[RackState.whatTurnIsIt()].isCellCaptured(row, col));
 			return cell;
 		})
 
