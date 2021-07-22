@@ -145,7 +145,7 @@ function dropChip(lowestRowIdx, colClicked, chipColor) { // so call with game bo
 // this should take any cell and return an array of vectors(arrays)
 // The vectors should be the location such taht when you get the contents if every is the same then that contents is the winner.
 
-function cardinalAround(referenceCellRowIdx, referenceCellColIdx) { // really this should be called like possibleWinCells
+function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be called like possibleWinCells
 	const unitVectors = { //  these are summing on top basically
 		right: [0, 1], // so for left and down, etc... we can multiply these principals by -1
 		up: [-1, 0],
@@ -167,5 +167,15 @@ function cardinalAround(referenceCellRowIdx, referenceCellColIdx) { // really th
 		}
 		scaledVectors[uVector] = scalingArr;
 	}
-	console.log(scaledVectors);		
+	// console.log(scaledVectors);
+	let posArr = [];
+	for (vector in scaledVectors) {
+		let cellsToBeChecked = scaledVectors[vector].map((translation) => {
+			posArr = [];
+			posArr[0] = refCellRowIdx + translation[0];
+			posArr[1] = refCellRowIdx + translation[1];
+			return posArr;
+		})
+	}
+	console.log(cellsToBeChecked);
 }
