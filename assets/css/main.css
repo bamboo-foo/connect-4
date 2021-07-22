@@ -18,6 +18,7 @@ body {
 footer {
     background-color: var(--bgnd-color);
     height: 30vh;
+    width: 100%;
 }
 
 header {
@@ -25,6 +26,9 @@ header {
     display: flex;
     width: 100%;
     font-size: 1.75em;
+}
+
+header div {
     padding-left: 5%;
 }
 
@@ -41,6 +45,7 @@ aside {
     display: flex;
     flex-direction: column;
     width: 100%;
+    padding: 15% 0 5% 0;
 }
 
 .buttons {
@@ -65,4 +70,5 @@ aside {
     align-self: center;
     font-size: 1.5em;
     font-style: italic;
+    padding-top: 1%;
 }
