@@ -221,20 +221,26 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 		for (let i = 0; i < direction.length - 3; i++) {
 			possibleWinningArrays = (direction.slice(i, i + 4));
 			console.log(possibleWinningArrays)
+			
+			// possibleWinningArrays.every( cell => console.log(cell))
+
+			if (possibleWinningArrays.every( cell => (cell[2] === 1)))
+
 			// if (possbi.slice(i, i + 4).forEach( combo => {
-			//	console.log(combo)
+				//	console.log(combo)
 				// if (combo.every( position => position[2] === '1')) {
-				// 	console.log(combo);
-				// 	return combo;
-				// } else if (combo.every( position => position[2] === '2')) {
-				// 	console.log(combo);
-				// 	return combo;
-				// }
-			// })) 
-			{
-				
-			}
+					// 	console.log(combo);
+					// 	return combo;
+					// } else if (combo.every( position => position[2] === '2')) {
+						// 	console.log(combo);
+						// 	return combo;
+						// }
+						// })) 
+						{
+							console.log('1 is winner')
+						}
 		}
 	})
-	//console.log(capturedDirections)
+				//console.log(capturedDirections)
 }
+			
