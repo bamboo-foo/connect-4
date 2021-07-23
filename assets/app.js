@@ -57,14 +57,10 @@ class Cell {
 		//get state
 		// console.log('hi');
 		// console.log(this.row, this.col);
-		console.log(typeof this.row)
-		console.log('in dropHere' + this.row, this.col)
 		if (turn[RackState.whatTurnIsIt()].isCellCaptured(this.row, this.col)) { // is this really an array? or like an object with many objects? they first key could be like an array then where it is the value and turn #
 			return 0; // this is a fail can't drop here can we return false?
 		} else {
 			this.renderCell(chipColor)// render this change too...
-			//console.log(turn[RackState.whatTurnIsIt()].rack)
-			console.log('after calling render cell' + RackState.whatTurnIsIt());
 			turn[RackState.whatTurnIsIt()].captureCell(this.row, this.col, chipColor)
 			cardinalAround(this.row, this.col) // so is it redundant to have turn in rackState but also be passed it when methods are being called? or i guess the controller will set the state in rackState and pass the arguments to all functions and methods
 			return 1;
@@ -130,6 +126,7 @@ function controller(mouseEvent) {
 	
 	whereClicked = mouseEvent.target.getAttribute('id');
 	clickedCol = parseInt(whereClicked[1]);
+	console.log(RackState.whatTurnIsIt());
     dropChip(rackRows - 1, clickedCol, RackState.whatTurnIsIt())
 }
 
@@ -145,19 +142,18 @@ function initCells(noOfRows, noOfColumns) {
 
 
 function handleUndo(mouseEvt) {
-	// console.log(cell[0])
 	// turn.pop();
 	RackState.undo();
 	reRender() // .disable set it to false but then true again if there is no more like turn[RackState.whatTurn + what turn it is ] is undefined then redisable redo 
-	// console.log(cell[0])
+	redoEl.disabled = false;
 }
 
 function handleRedo(mouseEvt) {
-	// console.log(cell[0])
 	// turn.pop();
-	RackState.redo();
-	reRender()
-	// console.log(cell[0])
+	if (RackState.whatTurnIsIt() < turn.length - 1) {
+		RackState.redo();
+		reRender()
+	}
 }
 // controller();
 function reRender() {
