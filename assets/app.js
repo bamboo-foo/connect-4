@@ -23,7 +23,7 @@ class RackState {
 			// console.log('in if statement' + RackState.whatTurnIsIt())
             turn[RackState.whatTurnIsIt()].rack[row][col] = 1;
 			RackState.wasUndo();
-		} else if (captor === 'blue') {
+		} else if (captor === '#2596be') {
             turn[RackState.whatTurnIsIt()].rack[row][col] = 2;
 			RackState.wasUndo();
 		}
@@ -194,7 +194,7 @@ function reRender() {
 					cell[i][j].renderCell('goldenrod');
 					break;
 				case 2:	
-					cell[i][j].renderCell('blue');
+					cell[i][j].renderCell('#2596be');
 					break;
 			} 
 		}
@@ -208,7 +208,7 @@ function dropChip(lowestRowIdx, colClicked, chipColor) { // so call with game bo
 	if (chipColor % 2) { // feels like spaghetti
 		chipColor = 'goldenrod';
 	} else {
-		chipColor = 'blue';
+		chipColor = '#2596be';
 	}
 
 	// cell[lowestRowIdx][colClicked].dropHere(chipColor);
