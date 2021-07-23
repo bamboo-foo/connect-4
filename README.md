@@ -1,6 +1,6 @@
 # About Connect-4
 
-![screenshot](./imgs/Connect-4.png)
+![screenshot](./imgs/Connect-4withColors.png)
 
 This project was to experiment with some ideas, it is to be a fun rendition of a classic.
 
