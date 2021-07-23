@@ -1,6 +1,7 @@
 class RackState {
     //	todo: if you go back to a previous rack state and a move is made the future rack states should be deleted.  like new game you could undo, but after you make one move you can't undo to previous game same with normal undo redo can't undo once make a move and push redo to go forward to previous game's state.
     static #turns = -1;
+	static #wasLastTurnUndo = false;
 	
 	constructor(turn, rack) {
         this.turn = turn;
@@ -21,8 +22,10 @@ class RackState {
 		if (captor === 'goldenrod') {
 			// console.log('in if statement' + RackState.whatTurnIsIt())
             turn[RackState.whatTurnIsIt()].rack[row][col] = 1;
+			RackState.wasUndo();
 		} else if (captor === 'blue') {
             turn[RackState.whatTurnIsIt()].rack[row][col] = 2;
+			RackState.wasUndo();
 		}
 		//console.log(turn2);
 	}
@@ -34,12 +37,21 @@ class RackState {
 	static undo() {
 		//move to oprevious state and then rerender every cell that is non zero in that rack state
 		this.#turns = this.#turns - 1;
+		this.#wasLastTurnUndo = true;
     }
 
 	static redo() {
 		//move to oprevious state and then rerender every cell that is non zero in that rack state
 		this.#turns = this.#turns + 1;
     }
+
+	static wasUndo() {
+		this.#wasLastTurnUndo = false;
+	}
+
+	static getUndo() {
+		return this.#wasLastTurnUndo;
+	}
 }
 
 let turn = [];
@@ -127,6 +139,12 @@ function controller(mouseEvent) {
 	whereClicked = mouseEvent.target.getAttribute('id');
 	clickedCol = parseInt(whereClicked[1]);
 	console.log(RackState.whatTurnIsIt());
+	if (RackState.getUndo()) {
+		while(turn.length > RackState.whatTurnIsIt() + 1) {
+			turn.pop();
+		}
+	}
+
     dropChip(rackRows - 1, clickedCol, RackState.whatTurnIsIt())
 }
 
