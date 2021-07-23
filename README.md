@@ -1,10 +1,12 @@
-# About connect-4
+# About Connect-4
+
+
 
 This project was to experiment with some ideas, it is to be a fun rendition of a classic.
 
 # Demo
 
-
+https://bamboo-foo.github.io/connect-4/
 
 # Tech Stack
 
