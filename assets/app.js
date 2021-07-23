@@ -123,7 +123,7 @@ const wholeRack = document.getElementById('rack'),
 wholeRack.addEventListener('click', controller);
 undoEl.addEventListener('click', handleUndo);
 redoEl.addEventListener('click', handleRedo);
-// newGameEl.addEventListener('click', handleNG);
+newGameEl.addEventListener('click', handleNG);
 
 redoEl.disabled = true;
 
@@ -161,9 +161,11 @@ function initCells(noOfRows, noOfColumns) {
 
 function handleUndo(mouseEvt) {
 	// turn.pop();
-	RackState.undo();
-	reRender() // .disable set it to false but then true again if there is no more like turn[RackState.whatTurn + what turn it is ] is undefined then redisable redo 
-	redoEl.disabled = false;
+	if (RackState.whatTurnIsIt() > 0) {
+		RackState.undo();
+		reRender() // .disable set it to false but then true again if there is no more like turn[RackState.whatTurn + what turn it is ] is undefined then redisable redo 
+		redoEl.disabled = false;
+	}
 }
 
 function handleRedo(mouseEvt) {
@@ -321,4 +323,8 @@ function winner(winningPlayer, winningCells) {
 
 	messageEl.innerText = (`Player ${winningPlayer} has won !!!`);
 	// delete event listener on rack
+}
+
+function handleNG() {
+	location.reload();
 }
