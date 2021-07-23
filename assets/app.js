@@ -82,8 +82,13 @@ class Cell {
 		// }
 	}
 	
-	renderCell(color) {
+	renderCell(color, win) {
 		this.el.setAttribute('style', `background-color: ${color}`);
+		if (win) {
+			this.el.setAttribute('style', `background-color: ${color}; background-image: linear-gradient(45deg, black, ${color}), linear-gradient(-45deg, black, ${color}); background-size: 9px 9px; background-repeat: repeat`)
+			//this.el.setAttribute('style', 'background-size: 5px 5px');
+			//8sthis.el.setAttribute('style', 'background-repeat: repeat');
+		}
 	}
 	
 	//	This should be done by controller.
@@ -317,7 +322,10 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 function winner(winningPlayer, winningCells) {
 	wholeRack.removeEventListener('click', controller);
 	undoEl.removeEventListener('click', handleUndo);
-	winningCells.forEach( circle => cell[circle[0]][circle[1]].renderCell('var(--bgnd-light)'));
+	winningCells.forEach( circle => {
+		cell[circle[0]][circle[1]].renderCell('var(--bgnd-light)', true);
+
+	})
 	
 	const messageEl = document.querySelector('.message');
 
