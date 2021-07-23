@@ -1,6 +1,6 @@
 # About connect-4
 
-This project was to experiments with some ideas, is to be a fun rendition of a classic.
+This project was to experiment with some ideas, it is to be a fun rendition of a classic.
 
 # Demo
 
