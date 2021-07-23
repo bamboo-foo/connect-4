@@ -23,3 +23,6 @@ It experiments with an idea where state is seperated from objects and hosted at 
 - [ ] Refine MVC architecture 
 - [ ] Increase accessibility with better button demarcation and style
 - [ ] Add chip to let user know who's turn it is
+- [ ] Formatting
+- [ ] Add dropping animation on turn
+- [ ] Call a tie
