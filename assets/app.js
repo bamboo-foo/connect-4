@@ -317,7 +317,7 @@ function cardinalAround(refCellRowIdx, refCellColIdx) { // really this should be
 function winner(winningPlayer, winningCells) {
 	wholeRack.removeEventListener('click', controller);
 	undoEl.removeEventListener('click', handleUndo);
-	winningCells.forEach( circle => cell[circle[0]][circle[1]].renderCell('green'));
+	winningCells.forEach( circle => cell[circle[0]][circle[1]].renderCell('var(--bgnd-light)'));
 	
 	const messageEl = document.querySelector('.message');
 
