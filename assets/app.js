@@ -148,7 +148,7 @@ function handleUndo(mouseEvt) {
 	// console.log(cell[0])
 	// turn.pop();
 	RackState.undo();
-	reRender()
+	reRender() // .disable set it to false but then true again if there is no more like turn[RackState.whatTurn + what turn it is ] is undefined then redisable redo 
 	// console.log(cell[0])
 }
 
