@@ -1,6 +1,6 @@
 # About Connect-4
 
-
+![screenshot](./imgs/Connect-4.png)
 
 This project was to experiment with some ideas, it is to be a fun rendition of a classic.
 
@@ -18,6 +18,8 @@ It experiments with an idea where state is seperated from objects and hosted at 
 
 ## To Do:
 
-- [ ] Responsive Design
-- [ ] Enhance Readability
+- [ ] Responsive design
+- [ ] Enhance readability
 - [ ] Refine MVC architecture 
+- [ ] Increase accessibility with better button demarcation and style
+- [ ] Add chip to let user know who's turn it is
