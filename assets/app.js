@@ -30,12 +30,12 @@ class RackState {
 	}
     
 	static undo() {
-		this.#turns = this.#turns - 1;
+		this.#turns--;
 		this.#wasLastTurnUndo = true;
     }
 
 	static redo() {
-		this.#turns = this.#turns + 1;
+		this.#turns++;
     }
 
 	static wasUndo() {
@@ -44,6 +44,10 @@ class RackState {
 
 	static getUndo() {
 		return this.#wasLastTurnUndo;
+	}
+
+	static newGame() {
+		this.#turns = 0;
 	}
 }
 
@@ -92,7 +96,8 @@ turn[0] = new RackState(0, initBoardArr);
 const wholeRack = document.getElementById('rack'),
 	  undoEl = document.getElementById('undo'), 
 	  redoEl = document.getElementById('redo'),
-	  newGameEl = document.getElementById('ng');
+	  newGameEl = document.getElementById('ng'),
+	  messageEl = document.querySelector('.message');
 
 
 wholeRack.addEventListener('click', controller);
@@ -164,7 +169,6 @@ function reRender() {
 					break;
 				case 2:	
 					cell[i][j].renderCell('#2596be');
-					break;
 			} 
 		}
 	}
@@ -271,11 +275,21 @@ function winner(winningPlayer, winningCells) {
 
 	})
 	
-	const messageEl = document.querySelector('.message');
 
 	messageEl.innerText = (`Player ${winningPlayer} has won !!!`);
 }
 
 function handleNG() {
-	location.reload();
+
+	RackState.newGame();
+
+	while (turn.length > 1) {
+		turn.pop();
+	}
+
+	messageEl.innerText = '';
+	
+	wholeRack.addEventListener('click', controller);
+			
+	reRender();
 }
