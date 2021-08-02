@@ -12,6 +12,12 @@ https://bamboo-foo.github.io/connect-4/
 
 This was built with JS, CSS and HTMl.  It is a mobile first design.
 
+# Learning Experience
+
+-- Todo -- 
+- [ ] screenshots
+- [ ] logic outline
+
 # Experimental
 
 It experiments with an idea where state is seperated from objects and hosted at a central repository.  Inspiration: https://day8.github.io/re-frame/application-state/#the-benefits
@@ -23,3 +29,4 @@ It experiments with an idea where state is seperated from objects and hosted at 
 - [ ] Refine MVC architecture 
 - [ ] Increase accessibility with better button demarcation and style
 - [ ] Add chip to let user know who's turn it is
+- [ ] Update read me to discuss and show learning experience and value of design, in the row vs col orientation
